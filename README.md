@@ -62,7 +62,7 @@ Please follow the existing code style and include tests where appropriate.
 # Contact
 Created by Adwaitha V— feel free to reach out!
 GitHub: https://github.com/AdwaithaV
-Email: your.email@example.com
+Email: adwaithav063@gmail.com 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
