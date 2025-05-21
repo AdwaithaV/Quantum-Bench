@@ -1,0 +1,10 @@
+name: quantumbench
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+    - qiskit
+    - pennylane
+    - cirq
+    - streamlit
+    - pandas
