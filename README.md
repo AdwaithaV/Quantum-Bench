@@ -15,6 +15,21 @@ It enables researchers and enterprise developers to compare performance and fide
 
 ---
 
+```
+quantumbench/
+├── app/ ← Main application logic (Streamlit or CLI-based)
+│ ├── init.py
+│ ├── runner.py ← Runs circuits on different simulators
+│ ├── visualizer.py ← Handles graphing/plotting results
+│ ├── utils.py ← Shared helper functions
+├── circuits/ ← Predefined or uploaded circuits
+├── tests/ ← Unit tests
+├── requirements.txt ← Python dependencies
+├── README.md
+├── main.py ← Entry point (for CLI or Streamlit)
+└── LICENSE
+```
+
 ## Getting Started
 
 ### Prerequisites
