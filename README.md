@@ -76,6 +76,32 @@ Fidelity
 
 Output statevector
 
+ ## Behind the Scenes (Architecture)
+# Backend: app/runner.py
+
+Contains logic to:
+
+Parse uploaded QASM code
+
+Transpile it
+
+Simulate using Qiskit's AerSimulator
+
+Return execution time, fidelity, and statevector
+
+# Frontend: main.py
+Built using Streamlit
+
+Handles:
+
+File upload
+
+Simulator selection
+
+Displaying results cleanly
+
+
+
 # Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests.
 Please follow the existing code style and include tests where appropriate.
