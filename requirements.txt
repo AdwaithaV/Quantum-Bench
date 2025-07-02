@@ -3,4 +3,4 @@ pennylane
 cirq
 streamlit
 pandas
-
+qiskit-aer
