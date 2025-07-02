@@ -224,4 +224,4 @@ This journey was more than just building a project — it was about learning how
 * Write clean, modular code
 * Build beginner-friendly UIs
 
-I hope this log becomes helpful for anyone looking to get started with quantum tools and for me during future interviews or team collaborations.
+I hope this log becomes helpful for anyone looking to get started with quantum tools.
