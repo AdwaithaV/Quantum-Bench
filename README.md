@@ -61,13 +61,20 @@ streamlit run run_app.py
 ```
 Open the URL shown in your terminal (usually http://localhost:8501) to use the app.
 # Usage
-Upload your quantum circuit file (QASM) or select a sample circuit
 
-Select which simulators to benchmark (Qiskit, PennyLane, Cirq)
+Upload your .qasm file (e.g., a Bell state circuit)
 
-Click Run Benchmark to see performance and fidelity comparison
+Select the simulator backend (only Qiskit available now)
 
-Export results for offline analysis
+Click Run Benchmark
+
+View:
+
+Execution time
+
+Fidelity
+
+Output statevector
 
 # Contributing
 Contributions are welcome! Feel free to open issues or submit pull requests.
