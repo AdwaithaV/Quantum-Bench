@@ -1,6 +1,5 @@
 import time
 from qiskit import QuantumCircuit, transpile
-from qiskit_aer import AerSimulator
 from qiskit.quantum_info import Statevector, state_fidelity
 
 def run_qiskit(qasm_code):
