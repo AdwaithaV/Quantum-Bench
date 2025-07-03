@@ -10,39 +10,40 @@ import pennylane.numpy as np
 import warnings
 warnings.filterwarnings("ignore")
 
+from qiskit import QuantumCircuit, transpile
+from qiskit_aer import AerSimulator
+import time
 
 def run_qiskit(qasm_code):
     try:
+        # Parse QASM and remove measurement ops
         circuit = QuantumCircuit.from_qasm_str(qasm_code)
+        circuit.remove_final_measurements()  # ⬅️ remove all measure ops
 
+        # Initialize simulator
         simulator = AerSimulator(method='statevector')
         circuit.save_statevector()
 
+        # Transpile for backend
         transpiled = transpile(circuit, simulator)
 
+        # Run and time it
         start_time = time.time()
         result = simulator.run(transpiled).result()
         exec_time = time.time() - start_time
 
+        # Get statevector
         statevector = result.get_statevector()
 
-        # Optional: Compute fidelity with zero state if dimensions match
-        try:
-            ref = Statevector.from_label('0' * circuit.num_qubits)
-            fidelity = state_fidelity(ref, statevector)
-        except:
-            fidelity = None
-
- 
         return {
             "backend": "Qiskit",
             "time": exec_time,
-            "fidelity": fidelity,
             "statevector": statevector.data.tolist()
         }
 
     except Exception as e:
         return {"backend": "Qiskit", "error": str(e)}
+
     
 
 def run_cirq(qasm_code):
