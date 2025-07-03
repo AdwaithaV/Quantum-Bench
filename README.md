@@ -64,7 +64,7 @@ Open the URL shown in your terminal (usually http://localhost:8501) to use the a
 
 Upload your .qasm file (e.g., a Bell state circuit)
 
-Select the simulator backend (only Qiskit available now)
+Select the simulator backend (Qiskit , PennyLane, Cirq)
 
 Click Run Benchmark
 
@@ -75,6 +75,8 @@ Execution time
 Fidelity
 
 Output statevector
+
+The execution time is also graphically represented in a bar chart for better visulaisation 
 
  ## Behind the Scenes (Architecture)
 # Backend: app/runner.py
