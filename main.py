@@ -1,5 +1,7 @@
 import streamlit as st
 from app.runner import run_qiskit
+from app.runner import run_pennylane
+from app.runner import run_cirq
 
 def main():
     st.set_page_config(page_title="QuantumBench", layout="wide")
