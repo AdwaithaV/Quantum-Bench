@@ -37,7 +37,7 @@ def main():
                 results.append(result)
             if "Cirq" in simulators:
                 result=run_cirq(qasm_code)
-                result.append(result) 
+                results.append(result) 
 
             # Display results
             st.subheader("Benchmark Results")
