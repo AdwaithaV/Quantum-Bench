@@ -1,55 +1,54 @@
 import streamlit as st
-from app.runner import run_qiskit
-from app.runner import run_pennylane
-from app.runner import run_cirq
+from app.runner import run_qiskit, run_pennylane, run_cirq
 
 def main():
     st.set_page_config(page_title="QuantumBench", layout="wide")
-    st.title(" QuantumBench: Quantum Circuit Benchmarking Tool")
+    st.title("🔬 QuantumBench: Quantum Circuit Benchmarking Tool")
 
-    # Upload .qasm file
-    uploaded_file = st.file_uploader("Upload your QASM circuit", type=["qasm"])
+    uploaded_file = st.file_uploader("📂 Upload your QASM circuit", type=["qasm"])
 
     qasm_code = None
     if uploaded_file:
         qasm_code = uploaded_file.read().decode("utf-8")
         st.code(qasm_code, language="qasm")
 
-    # Select simulators to benchmark
-    simulators = st.multiselect("Select simulators", ["Qiskit", "PennyLane", "Cirq"])
+    simulators = st.multiselect("⚙️ Select simulators to benchmark", ["Qiskit", "PennyLane", "Cirq"])
 
-    # Benchmark on click
-    if st.button("Run Benchmark"):
+    if st.button("🚀 Run Benchmark"):
         if not qasm_code:
-            st.warning("Please upload a QASM circuit.")
+            st.warning("⚠️ Please upload a QASM circuit.")
         elif not simulators:
-            st.warning("Select at least one simulator.")
+            st.warning("⚠️ Select at least one simulator.")
         else:
-            st.info("Benchmarking in progress...")
+            st.info("⏳ Benchmarking in progress...")
 
             results = []
 
             if "Qiskit" in simulators:
-                result = run_qiskit(qasm_code)
-                results.append(result)
-            if "PennyLane"  in simulators:
-                result=run_pennylane(qasm_code)
-                results.append(result)
+                results.append(run_qiskit(qasm_code))
+            if "PennyLane" in simulators:
+                results.append(run_pennylane(qasm_code))
             if "Cirq" in simulators:
-                result=run_cirq(qasm_code)
-                results.append(result) 
+                results.append(run_cirq(qasm_code))
 
             # Display results
-            st.subheader("Benchmark Results")
+            st.subheader("📊 Benchmark Results")
             for res in results:
                 if "error" in res:
                     st.error(f"{res['backend']} error: {res['error']}")
                 else:
-                    st.markdown(f"**Backend:** {res['backend']}")
-                    st.markdown(f"Execution Time: `{res['time']:.4f}` seconds")
-                    st.markdown(f"Fidelity: `{res['fidelity']:.4f}`")
-                    st.markdown("Statevector (truncated):")
-                    st.code(res['statevector'][:4], language="json")  # show only first few elements
+                    st.markdown(f"**Backend:** `{res['backend']}`")
+                    st.markdown(f"⏱️ Execution Time: `{res['time']:.4f}` seconds")
+
+                    fidelity = res.get("fidelity")
+                    if fidelity is not None:
+                        st.markdown(f"🎯 Fidelity: `{fidelity:.4f}`")
+                    else:
+                        st.markdown("🎯 Fidelity: `Not Available`")
+
+                    st.markdown("🧬 Statevector (truncated):")
+                    statevector = res.get("statevector", [])
+                    st.code(statevector[:4], language="json")
 
 if __name__ == "__main__":
     main()
