@@ -7,40 +7,46 @@ import numpy as np
 from qiskit.quantum_info import Operator
 import pennylane as qml
 import pennylane.numpy as np
+import warnings
+warnings.filterwarnings("ignore")
+
 
 def run_qiskit(qasm_code):
     try:
         # Parse the QASM code into a QuantumCircuit
         circuit = QuantumCircuit.from_qasm_str(qasm_code)
 
-        # Initialize AerSimulator with statevector method
+        # Remove measurements (optional: clean version)
+        circuit.data = [gate for gate in circuit.data if gate[0].name != 'measure']
+
+        # Use AerSimulator with statevector method
         simulator = AerSimulator(method='statevector')
 
-        # Add instruction to save statevector
+        # Save statevector for retrieval
         circuit.save_statevector()
 
-        # Transpile for the simulator backend
+        # Transpile circuit for simulator
         transpiled = transpile(circuit, simulator)
 
         # Start timing
         start_time = time.time()
 
-        # Run the transpiled circuit
+        # Run simulation
         result = simulator.run(transpiled).result()
+        exec_time = time.time() - start_time
 
         # Extract statevector
         statevector = result.get_statevector()
 
-        exec_time = time.time() - start_time
-
-        # Compute fidelity (against ideal state if needed, here assumed perfect)
-        fidelity = 1.0  #
+        # Ideal Bell state for fidelity comparison: (|00> + |11>) / sqrt(2)
+        ideal = Statevector([1/2**0.5, 0, 0, 1/2**0.5])
+        fidelity = state_fidelity(statevector, ideal)
 
         return {
             "backend": "Qiskit",
             "time": exec_time,
             "fidelity": fidelity,
-            "statevector": statevector.data.tolist()  # Optional: for analysis
+            "statevector": statevector.data.tolist()
         }
 
     except Exception as e:
