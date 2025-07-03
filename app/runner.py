@@ -13,35 +13,27 @@ warnings.filterwarnings("ignore")
 
 def run_qiskit(qasm_code):
     try:
-        # Parse the QASM code into a QuantumCircuit
         circuit = QuantumCircuit.from_qasm_str(qasm_code)
 
-        # Remove measurements (optional: clean version)
-        circuit.data = [gate for gate in circuit.data if gate[0].name != 'measure']
-
-        # Use AerSimulator with statevector method
         simulator = AerSimulator(method='statevector')
-
-        # Save statevector for retrieval
         circuit.save_statevector()
 
-        # Transpile circuit for simulator
         transpiled = transpile(circuit, simulator)
 
-        # Start timing
         start_time = time.time()
-
-        # Run simulation
         result = simulator.run(transpiled).result()
         exec_time = time.time() - start_time
 
-        # Extract statevector
         statevector = result.get_statevector()
 
-        # Ideal Bell state for fidelity comparison: (|00> + |11>) / sqrt(2)
-        ideal = Statevector([1/2**0.5, 0, 0, 1/2**0.5])
-        fidelity = state_fidelity(statevector, ideal)
+        # Optional: Compute fidelity with zero state if dimensions match
+        try:
+            ref = Statevector.from_label('0' * circuit.num_qubits)
+            fidelity = state_fidelity(ref, statevector)
+        except:
+            fidelity = None
 
+ 
         return {
             "backend": "Qiskit",
             "time": exec_time,
