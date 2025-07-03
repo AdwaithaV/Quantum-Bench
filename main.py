@@ -3,7 +3,7 @@ from app.runner import run_qiskit
 
 def main():
     st.set_page_config(page_title="QuantumBench", layout="wide")
-    st.title("🧪 QuantumBench: Quantum Circuit Benchmarking Tool")
+    st.title(" QuantumBench: Quantum Circuit Benchmarking Tool")
 
     # Upload .qasm file
     uploaded_file = st.file_uploader("Upload your QASM circuit", type=["qasm"])
@@ -30,17 +30,23 @@ def main():
             if "Qiskit" in simulators:
                 result = run_qiskit(qasm_code)
                 results.append(result)
+            if "PennyLane"  in simulators:
+                result=run_pennylane(qasm_code)
+                results.append(result)
+            if "Cirq" in simulators:
+                result=run_cirq(qasm_code)
+                result.append(result) 
 
             # Display results
-            st.subheader("🔍 Benchmark Results")
+            st.subheader("Benchmark Results")
             for res in results:
                 if "error" in res:
                     st.error(f"{res['backend']} error: {res['error']}")
                 else:
                     st.markdown(f"**Backend:** {res['backend']}")
-                    st.markdown(f"- ⏱ Execution Time: `{res['time']:.4f}` seconds")
-                    st.markdown(f"- 🎯 Fidelity: `{res['fidelity']:.4f}`")
-                    st.markdown("📦 Statevector (truncated):")
+                    st.markdown(f"Execution Time: `{res['time']:.4f}` seconds")
+                    st.markdown(f"Fidelity: `{res['fidelity']:.4f}`")
+                    st.markdown("Statevector (truncated):")
                     st.code(res['statevector'][:4], language="json")  # show only first few elements
 
 if __name__ == "__main__":
