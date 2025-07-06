@@ -18,7 +18,7 @@ def run_qiskit(qasm_code):
     try:
         # Parse QASM and remove measurement ops
         circuit = QuantumCircuit.from_qasm_str(qasm_code)
-        circuit.remove_final_measurements()  # ⬅️ remove all measure ops
+        circuit.remove_final_measurements()  #  remove all measure ops
 
         # Initialize simulator
         simulator = AerSimulator(method='statevector')
