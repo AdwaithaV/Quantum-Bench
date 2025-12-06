@@ -1,113 +1,118 @@
 # QuantumBench
 
 QuantumBench is a cross-platform benchmarking and visualization tool for quantum circuit simulators.  
-It enables researchers and developers to compare performance and fidelity of quantum simulations across popular frameworks like Qiskit, PennyLane, and Cirq — all from a simple and interactive web interface built using Flask and React.
+It enables researchers and enterprise developers to compare performance and fidelity of quantum simulations across popular frameworks like Qiskit, PennyLane, and Cirq — all from a simple and interactive web interface.
 
 ---
 
 ## Features
 
-- Run benchmark tests on quantum circuits across multiple simulators  
-- Visualize execution time and fidelity comparisons via intuitive bar charts  
-- Upload custom `.qasm` files or use built-in examples  
-- Export benchmark results  
-- Lightweight and modular codebase (Python + React)  
+- Run benchmark tests on quantum circuits across multiple backends  
+- Visualize execution time and fidelity comparisons via intuitive graphs  
+- Support for uploading custom circuits or choosing from built-in examples  
+- Export benchmark results in CSV format  
+- Lightweight, modular design for easy extension  
 
 ---
 
 ```
 quantumbench/
-├── app/                       ← Main benchmarking logic
-│   └── runner.py             ← Runs circuits on different simulators
-├── flask-server.py           ← Flask API server
-├── react-app/                ← React frontend app
-│   ├── basic_bell_state.qasm
-│   ├── public/
-│   ├── src/
-│   │   ├── components/       ← UI components (charts, selectors)
-│   │   ├── Dashboard.js      ← Core frontend logic
-│   │   └── App.css / index.js / ...
-├── requirements.txt          ← Python dependencies
-├── package.json              ← Root package.json if needed
-├── LICENSE                   ← MIT License
+├── app/ ← Main application logic (Streamlit or CLI-based)
+│ ├── init.py
+│ ├── runner.py ← Runs circuits on different simulators
+│ ├── visualizer.py ← Handles graphing/plotting results
+│ ├── utils.py ← Shared helper functions
+├── circuits/ ← Predefined or uploaded circuits
+├── tests/ ← Unit tests
+├── requirements.txt ← Python dependencies
 ├── README.md
-└── CONTRIBUTING.md           ← Guide for contributors
+├── main.py ← Entry point (for CLI or Streamlit)
+└── LICENSE
 ```
 
 ## Getting Started
 
 ### Prerequisites
+
 - Python 3.9 or above  
-- Node.js + npm  
-- pip (Python package manager)
+- pip package manager  
 
 ### Installation
 
-1. Clone the repository and go into the directory:
+1. Clone the repository:
 
-2. (Optional) Create and activate a virtual environment:
    ```bash
+   git clone https://github.com/yourusername/quantum-bench.git
+   cd quantum-bench
+2.(Optional) Create and activate a virtual environment:
+```bash
    python -m venv env
-   source env/bin/activate   # Linux/macOS
-   .\env\Scripts\activate    # Windows
-   ```
+source env/bin/activate   # Linux/macOS
+.\env\Scripts\activate    # Windows
+```
+3.Install required packages:
+```bash
+pip install -r requirements.txt
+```
+**Running the App**
+Run the Streamlit interface:
+```bash
+streamlit run run_app.py
+```
+Open the URL shown in your terminal (usually http://localhost:8501) to use the app.
+# Usage
 
-3. Install backend requirements:
-   ```bash
-   pip install -r requirements.txt
-   ```
+Upload your .qasm file (e.g., a Bell state circuit)
 
-4. Start Flask backend:
-   ```bash
-   python flask-server.py
-   ```
+Select the simulator backend (Qiskit , PennyLane, Cirq)
 
-5. Install frontend dependencies and start React app:
-   ```bash
-   cd react-app
-   npm install
-   npm start
-   ```
-   Open http://localhost:3000 to view the frontend.
+Click Run Benchmark
 
----
+View:
 
-## Usage
+Execution time
 
-1. Upload your `.qasm` file (e.g., Bell state circuit)  
-2. Select one or more simulator backends: Qiskit, PennyLane, Cirq  
-3. Click **Run Benchmark**
+Fidelity
 
-You’ll see:
-- Execution time per backend
-- Output statevectors
+Output statevector
 
-A bar chart will display execution times for visual clarity.
+The execution time is also graphically represented in a bar chart for better visulaisation 
 
----
+ ## Behind the Scenes (Architecture)
+# Backend: app/runner.py
 
-## Project Structure
+Contains logic to:
 
-### Backend: `flask-server.py`, `app/runner.py`
-- Parses QASM
-- Removes measurements
-- Simulates with Qiskit, PennyLane, Cirq
-- Returns execution time and statevector for each backend
-- Calculates fidelity between output statevectors
+Parse uploaded QASM code
 
-### Frontend: `react-app/`
-- `Dashboard.js` handles UI logic and API communication
-- `BarChart.jsx` shows performance results
-- `simSelector.jsx` handles simulator selection
-- Upload QASM, run benchmark, display results
+Transpile it
 
-## Contact
-Created by Adwaitha V — feel free to reach out!  
-GitHub: [@AdwaithaV](https://github.com/AdwaithaV)  
-Email: adwaithav063@gmail.com
+Simulate using Qiskit's AerSimulator
 
----
+Return execution time, fidelity, and statevector
 
+# Frontend: main.py
+Built using Streamlit
+
+Handles:
+
+File upload
+
+Simulator selection
+
+Displaying results cleanly
+
+
+
+# Contributing
+Contributions are welcome! Feel free to open issues or submit pull requests.
+Please follow the existing code style and include tests where appropriate.
+
+
+# Contact
+Created by Adwaitha V— feel free to reach out!
+GitHub: https://github.com/AdwaithaV
+Email: adwaithav063@gmail.com 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
