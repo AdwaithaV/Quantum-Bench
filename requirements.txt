@@ -1,9 +1,8 @@
 qiskit
 pennylane
 cirq
+streamlit
 pandas
 qiskit-aer
 pennylane_qiskit
 pandas
-flask
-flask_cors
