@@ -17,6 +17,5 @@ seaborn
 ply
 # System Utilities
 setuptools
-pennylane-lightning[gpu]
 fastapi 
 uvicorn 

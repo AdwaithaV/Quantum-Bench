@@ -14,7 +14,59 @@ import matplotlib.pyplot as plt
 from app.runner import QBenchAnalyzer, plot_master_dashboard
 
 
-st.set_page_config(page_title="QBench Pro", page_icon="⚛️", layout="wide")
+st.set_page_config(page_title="QBench Pro", layout="wide")
+
+# CSS INJECTION
+import base64
+def get_base64(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+try:
+    bg_code = get_base64("assets/bg.png")
+    st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url("data:image/png;base64,{bg_code}");
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            background-color: rgba(54, 69, 79, 0.95); /* Deep Charcoal overlay */
+        }}
+        /* Custom Button Style */
+        div.stButton > button {{
+            background: linear-gradient(145deg, #1e262c, #232d34);
+            color: #00BFFF;
+            border: 1px solid #00BFFF;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }}
+        div.stButton > button:hover {{
+            background: #00BFFF;
+            color: #1e262c;
+            box-shadow: 0 0 15px #00BFFF;
+            transform: translateY(-2px);
+        }}
+        /* Custom Tab Color */
+        button[data-baseweb="tab"] {{
+            background-color: transparent !important;
+            color: #D3D3D3;
+        }}
+        button[data-baseweb="tab"][aria-selected="true"] {{
+            color: #00BFFF !important;
+            border-bottom-color: #00BFFF !important;
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+except Exception: pass
 
 st.title("QBench Pro: Ultimate Quantum Benchmark")
 st.markdown("Compare Simulators (Qiskit, Cirq, PennyLane) vs Real IBM Quantum Hardware.")
@@ -74,8 +126,8 @@ rx(0.5) q[0];
     qasm_code = st.text_area("Paste QASM Code", default_qasm, height=250)
 
 with col2:
-    st.info("ℹ️ Qiskit is used as the 'Ground Truth'.")
-    run_btn = st.button("🚀 RUN BENCHMARK", type="primary", use_container_width=True)
+    # Removed Info Message as requested
+    run_btn = st.button("RUN BENCHMARK", type="primary", use_container_width=True)
 
 if run_btn:
     all_backends = simulators + selected_hardware
@@ -93,7 +145,7 @@ if run_btn:
                 st.success("Benchmark Complete!")
                 
                 # METRICS TABS
-                tab1, tab2, tab3 = st.tabs(["📊 Master Dashboard", "📋 Data Table", "🧠 Memory Matrix"])
+                tab1, tab2, tab3 = st.tabs(["Master Dashboard", "Data Table", "Memory Matrix"])
                 
                 with tab1:
                     fig = plot_master_dashboard(df)
