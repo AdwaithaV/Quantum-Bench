@@ -7,28 +7,13 @@ It enables researchers and enterprise developers to compare performance and fide
 
 ## Features
 
-- Run benchmark tests on quantum circuits across multiple backends  
-- Visualize execution time and fidelity comparisons via intuitive graphs  
-- Support for uploading custom circuits or choosing from built-in examples  
-- Export benchmark results in CSV format  
-- Lightweight, modular design for easy extension  
+- Run benchmark tests on quantum circuits across multiple backends (Qiskit, Cirq, PennyLane)
+- **Robust Execution**: Handles large circuits with memory safety checks (>24 qubits protected)
+- **Real Hardware Persistence**: Easily fetch and select IBM Quantum devices without losing state
+- **Windows Optimized**: Built-in fixes for common PennyLane DLL errors
+- Visualize execution time, fidelity, and memory usage
 
 ---
-
-```
-quantumbench/
-├── app/ ← Main application logic (Streamlit or CLI-based)
-│ ├── init.py
-│ ├── runner.py ← Runs circuits on different simulators
-│ ├── visualizer.py ← Handles graphing/plotting results
-│ ├── utils.py ← Shared helper functions
-├── circuits/ ← Predefined or uploaded circuits
-├── tests/ ← Unit tests
-├── requirements.txt ← Python dependencies
-├── README.md
-├── main.py ← Entry point (for CLI or Streamlit)
-└── LICENSE
-```
 
 ## Getting Started
 
@@ -40,43 +25,46 @@ quantumbench/
 ### Installation
 
 1. Clone the repository:
-
    ```bash
    git clone https://github.com/yourusername/quantum-bench.git
    cd quantum-bench
-2.(Optional) Create and activate a virtual environment:
-```bash
+   ```
+
+2. (Optional) Create and activate a virtual environment:
+   ```bash
    python -m venv env
-source env/bin/activate   # Linux/macOS
-.\env\Scripts\activate    # Windows
-```
-3.Install required packages:
-```bash
-pip install -r requirements.txt
-```
-**Running the App**
+   # Windows
+   .\env\Scripts\activate
+   # Linux/macOS
+   source env/bin/activate
+   ```
+
+3. Install required packages:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Running the App
+
 Run the Streamlit interface:
 ```bash
-streamlit run run_app.py
+streamlit run main.py
 ```
 Open the URL shown in your terminal (usually http://localhost:8501) to use the app.
-# Usage
 
-Upload your .qasm file (e.g., a Bell state circuit)
+## Usage
 
-Select the simulator backend (Qiskit , PennyLane, Cirq)
+1. **Upload or Paste** your QASM code (OpenQASM 2.0 supported).
+2. **Select Backends**:
+   - **Simulators**: Qiskit Aer, Cirq, PennyLane (Pure Python mode).
+   - **Hardware**: Enter your IBM Cloud CRN & API Key -> Click "Fetch" -> Select Devices.
+3. Click **RUN BENCHMARK**.
+4. View results in the **Master Dashboard**, **Data Table**, and **Memory Matrix**.
 
-Click Run Benchmark
-
-View:
-
-Execution time
-
-Fidelity
-
-Output statevector
-
-The execution time is also graphically represented in a bar chart for better visulaisation 
+### Note on Stability
+- **PennyLane**: Uses a custom pure-Python converter to ensure stability on all platforms (bypassing potentially broken plugins).
+- **Large Circuits**: Local simulators are capped at 24 qubits to prevent System OOM crashes.
+- **Hardware Timeouts**: The app waits 60s for hardware results, then reports "Queued" to avoid freezing. 
 
  ## Behind the Scenes (Architecture)
 # Backend: app/runner.py

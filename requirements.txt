@@ -1,8 +1,22 @@
-qiskit
-pennylane
-cirq
-streamlit
-pandas
+# Quantum Frameworks
+qiskit>=1.0.0
 qiskit-aer
-pennylane_qiskit
+qiskit-ibm-runtime
+pennylane
+pennylane-qiskit
+cirq
+
+# Frontend & Dashboard
+streamlit
+
+# Data Manipulation & Visualization
+numpy
 pandas
+matplotlib
+seaborn
+ply
+# System Utilities
+setuptools
+pennylane-lightning[gpu]
+fastapi 
+uvicorn 
