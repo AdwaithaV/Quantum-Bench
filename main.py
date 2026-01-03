@@ -1,5 +1,4 @@
 import sys
-# GLOBAL WORKAROUND: Force disable broken PennyLane plugins (DLL error fix)
 try:
     sys.modules['pennylane_lightning'] = None
     sys.modules['pennylane_lightning.qubit'] = None
@@ -126,7 +125,6 @@ rx(0.5) q[0];
     qasm_code = st.text_area("Paste QASM Code", default_qasm, height=250)
 
 with col2:
-    # Removed Info Message as requested
     run_btn = st.button("RUN BENCHMARK", type="primary", use_container_width=True)
 
 if run_btn:
